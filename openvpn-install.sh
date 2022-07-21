@@ -4,6 +4,8 @@
 # Secure OpenVPN server installer for Debian, Ubuntu, CentOS, Amazon Linux 2, Fedora, Oracle Linux 8, Arch Linux, Rocky Linux and AlmaLinux.
 # https://github.com/angristan/openvpn-install
 
+echo $(pwd)
+
 function isRoot() {
 	if [ "$EUID" -ne 0 ]; then
 		return 1
@@ -1056,6 +1058,10 @@ verb 3" >>/etc/openvpn/client-template.txt
 }
 
 function newClient() {
+	# Creating config to
+	homeDir="$(pwd)/config"
+	mkdir $homeDir
+
 	echo ""
 	echo "Tell me a name for the client."
 	echo "The name must consist of alphanumeric character. It may also include an underscore or a dash."
@@ -1093,9 +1099,7 @@ function newClient() {
 		echo "Client $CLIENT added."
 	fi
 
-	#  Tested only with machine with pwd installed
-	homeDir=$(pwd)
-	
+
 	# # Home directory of the user, where the client configuration will be written
 	# if [ -e "/home/${CLIENT}" ]; then
 	# 	# if $1 is a user name
