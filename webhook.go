@@ -121,7 +121,7 @@ func addOpenVPNClient(c *fiber.Ctx) error {
 	os.Setenv("CLIENT", client.ClientName)
 	os.Setenv("PASS", "")
 	if client.Password != nil {
-		os.Setenv("PASS", "1")
+		os.Setenv("PASS", *client.Password)
 	}
 
 	cmd := exec.Command("bash", "./openvpn-install.sh")
