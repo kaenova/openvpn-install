@@ -23,7 +23,7 @@ type CreateOpenVPNClientReq struct {
 func AddOpenVPNClient(c *fiber.Ctx) error {
 	client := new(CreateOpenVPNClientReq)
 
-	users, err := GetUser()
+	users, err := GetUserActive()
 	if err != nil {
 		c.Status(500)
 		return c.SendString("Tidak dapat mengambil config user yang tersedia")
@@ -73,7 +73,7 @@ func SendConfig(c *fiber.Ctx) error {
 }
 
 func ListClient(c *fiber.Ctx) error {
-	users, err := GetUser()
+	users, err := GetUserActive()
 	if err != nil {
 		c.Status(500)
 		return c.SendString("Tidak dapat mengambil config user")

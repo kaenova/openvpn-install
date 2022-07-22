@@ -17,7 +17,7 @@ func IsRoot() bool {
 	return currentUser.Username == "root"
 }
 
-func GetUser() ([]string, error) {
+func GetUserOpenVPNFile() ([]string, error) {
 	readFile := "/etc/openvpn/easy-rsa/pki/index.txt"
 	file, err := os.Open(readFile)
 	if err != nil {
@@ -39,6 +39,25 @@ func GetUser() ([]string, error) {
 
 	}
 	return users, scanner.Err()
+}
+
+func GetUserActive() ([]string, error) {
+	usersOpenvpn, err := GetUserOpenVPNFile()
+	if err != nil {
+		return nil, err
+	}
+	usersDir, err := ListDir("./config")
+	if err != nil {
+		return nil, err
+	}
+
+	var finalUser []string
+	for i := 0; i < len(usersDir); i++ {
+		if StringInSlice(usersDir[i]+".ovpn", usersOpenvpn) {
+			finalUser = append(finalUser, usersDir[i])
+		}
+	}
+	return finalUser, nil
 }
 
 func StringInSlice(a string, list []string) bool {
