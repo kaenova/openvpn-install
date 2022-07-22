@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kerjago OpenVPN</title>
+</head>
+<body>
+  <h1>Create OpenVPN User</h1>
+  <form action="/add" method="post">
+    <label for="clientname">
+      <p>ClientName: </p>
+      <input type="text" name="clientname" id="clientname">
+    </label>
+    <label for="password">
+      <p>Password (Optional): </p>
+      <input type="password" name="password" id="password">
+    </label>
+    <button type="submit">
+      Submit
+    </button>
+  </form>
+  <h1>Download OpenVPN</h1>
+  <label for="down_clientname">
+    <p>ClientName: </p>
+    <input type="text" name="clientname_download" id="clientname_download">
+    <button onclick="toDownload()" id="btn_clientname_download">
+      Try to Download
+    </button>
+  </label>
+  <script>
+    function toDownload() {
+      const clientDownloadInput = document.getElementById("clientname_download")
+      alert(clientDownloadInput.value)
+      window.location.replace(`/list/${clientDownloadInput.value}`)
+    }
+    </script> 
+</body>
+</html>
