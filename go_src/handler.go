@@ -1,4 +1,4 @@
-package main
+package gosrc
 
 import (
 	"os"
@@ -11,8 +11,8 @@ import (
 === Handler ===
 */
 
-func renderIndex(c *fiber.Ctx) error {
-	return nil
+func RenderIndex(c *fiber.Ctx) error {
+	return c.Render("index", fiber.Map{})
 }
 
 type CreateOpenVPNClientReq struct {
@@ -20,10 +20,10 @@ type CreateOpenVPNClientReq struct {
 	Password   *string `json:"password" xml:"password" form:"password"`
 }
 
-func addOpenVPNClient(c *fiber.Ctx) error {
+func AddOpenVPNClient(c *fiber.Ctx) error {
 	client := new(CreateOpenVPNClientReq)
 
-	users, err := getUser()
+	users, err := GetUser()
 	if err != nil {
 		c.Status(500)
 		return c.SendString("Tidak dapat mengambil config user yang tersedia")
@@ -34,7 +34,7 @@ func addOpenVPNClient(c *fiber.Ctx) error {
 		return c.SendString(err.Error())
 	}
 
-	if stringInSlice(client.ClientName, users) {
+	if StringInSlice(client.ClientName, users) {
 		c.Status(400)
 		return c.SendString("Client name sudah digunakan")
 	}
@@ -56,15 +56,15 @@ func addOpenVPNClient(c *fiber.Ctx) error {
 	return c.Redirect("/list/" + client.ClientName)
 }
 
-func sendConfig(c *fiber.Ctx) error {
-	files, err := listDir("./config")
+func SendConfig(c *fiber.Ctx) error {
+	files, err := ListDir("./config")
 	if err != nil {
 		c.Status(500)
 		return c.SendString("Tidak dapat mengambil data config yang tersedia")
 	}
 
 	clientName := c.Params("clientname")
-	if !stringInSlice(clientName+".ovpn", files) {
+	if !StringInSlice(clientName+".ovpn", files) {
 		c.Status(400)
 		return c.SendString("Tidak ditemukan config ovpn yang dicari")
 	}
@@ -72,8 +72,8 @@ func sendConfig(c *fiber.Ctx) error {
 	return c.Redirect("/static/" + clientName + ".ovpn")
 }
 
-func listClient(c *fiber.Ctx) error {
-	users, err := getUser()
+func ListClient(c *fiber.Ctx) error {
+	users, err := GetUser()
 	if err != nil {
 		c.Status(500)
 		return c.SendString("Tidak dapat mengambil config user")

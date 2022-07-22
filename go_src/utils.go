@@ -1,4 +1,4 @@
-package main
+package gosrc
 
 import (
 	"bufio"
@@ -9,7 +9,7 @@ import (
 	"regexp"
 )
 
-func isRoot() bool {
+func IsRoot() bool {
 	currentUser, err := user.Current()
 	if err != nil {
 		log.Fatalf("[isRoot] Unable to get current user: %s", err)
@@ -17,7 +17,7 @@ func isRoot() bool {
 	return currentUser.Username == "root"
 }
 
-func getUser() ([]string, error) {
+func GetUser() ([]string, error) {
 	readFile := "/etc/openvpn/easy-rsa/pki/index.txt"
 	file, err := os.Open(readFile)
 	if err != nil {
@@ -41,7 +41,7 @@ func getUser() ([]string, error) {
 	return users, scanner.Err()
 }
 
-func stringInSlice(a string, list []string) bool {
+func StringInSlice(a string, list []string) bool {
 	for _, b := range list {
 		if b == a {
 			return true
@@ -50,7 +50,7 @@ func stringInSlice(a string, list []string) bool {
 	return false
 }
 
-func listDir(dir string) ([]string, error) {
+func ListDir(dir string) ([]string, error) {
 	files, err := ioutil.ReadDir(dir)
 	if err != nil {
 		return nil, nil

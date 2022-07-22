@@ -5,10 +5,11 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html"
+	gosrc "github.com/kaenova/openvpn-install/go_src"
 )
 
 func main() {
-	if !isRoot() {
+	if !gosrc.IsRoot() {
 		log.Fatal("You need to run this program on root")
 	}
 
@@ -23,13 +24,13 @@ func main() {
 		Browse:   false,
 	})
 
-	app.Get("/", renderIndex)
+	app.Get("/", gosrc.RenderIndex)
 
-	app.Get("/list", listClient)
+	app.Get("/list", gosrc.ListClient)
 
-	app.Get("/list/:clientname", sendConfig)
+	app.Get("/list/:clientname", gosrc.SendConfig)
 
-	app.Post("/add", addOpenVPNClient)
+	app.Post("/add", gosrc.AddOpenVPNClient)
 
 	app.Listen(":3000")
 }
