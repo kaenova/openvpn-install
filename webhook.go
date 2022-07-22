@@ -156,8 +156,8 @@ func GetUserActive() ([]string, error) {
 	}
 
 	var finalUser []string
-	for i := 0; i < len(usersDir); i++ {
-		if StringInSlice(usersDir[i]+".ovpn", usersOpenvpn) {
+	for i := 0; i < len(usersOpenvpn); i++ {
+		if StringInSlice(usersOpenvpn[i]+".ovpn", usersDir) {
 			finalUser = append(finalUser, usersDir[i])
 		}
 	}
