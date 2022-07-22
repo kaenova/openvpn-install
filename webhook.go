@@ -49,8 +49,7 @@ func RenderIndex(c *fiber.Ctx) error {
 }
 
 type CreateOpenVPNClientReq struct {
-	ClientName string  `json:"client" xml:"client" form:"client"`
-	Password   *string `json:"password" xml:"password" form:"password"`
+	ClientName string `json:"client" xml:"client" form:"client"`
 }
 
 func AddOpenVPNClient(c *fiber.Ctx) error {
@@ -74,12 +73,8 @@ func AddOpenVPNClient(c *fiber.Ctx) error {
 
 	os.Setenv("MENU_OPTION", "1")
 	os.Setenv("CLIENT", client.ClientName)
-	os.Setenv("PASS", "")
-	if client.Password != nil {
-		os.Setenv("PASS", *client.Password)
-	}
-
-	cmd := exec.Command("bash", "./openvpn-install.sh")
+	os.Setenv("PASS", "1")
+	cmd := exec.Command("./openvpn-install.sh")
 	cmd.Start()
 	err = cmd.Wait()
 	if err != nil {
