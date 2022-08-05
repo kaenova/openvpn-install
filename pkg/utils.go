@@ -30,7 +30,7 @@ func GetUserOpenVPNFile() ([]string, error) {
 	for scanner.Scan() {
 		line := scanner.Text()
 
-		re := regexp.MustCompile(`/CN=([^\s]+)`)
+		re := regexp.MustCompile(`V.+/CN=([^\s]+)`)
 		result := re.FindStringSubmatch(line)
 
 		if len(result) == 2 {
