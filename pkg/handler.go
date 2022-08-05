@@ -1,4 +1,4 @@
-package main
+package pkg
 
 import (
 	"os"
@@ -57,7 +57,7 @@ func SendConfig(c *fiber.Ctx) error {
 		return c.SendString("Cannot get config file")
 	}
 
-	clientName := c.Params("clientname")
+	clientName := c.Query("client")
 
 	users, err := GetUserOpenVPNFile()
 	if err != nil {
